@@ -19,6 +19,9 @@ var db = new ODatabase({
 //HTTP Server init
 var app = express();
 
+//make 3d a static folder, for development
+app.use(express.static('3d'));
+
 app.get('/Person/:person', function (req, res) {
   var person = req.params.person;
 

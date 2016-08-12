@@ -5,6 +5,9 @@
 # config files
 conf.json
 
+# MAC
+.DS_Store
+
 # Logs
 logs
 *.log
