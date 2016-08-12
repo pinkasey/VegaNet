@@ -2,6 +2,9 @@
 *.iml
 .idea
 
+# config files
+conf.json
+
 # Logs
 logs
 *.log

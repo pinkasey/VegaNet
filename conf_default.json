@@ -1,0 +1,9 @@
+{
+  "db" : {
+    "username" : "root",
+    "password" : "root",
+    "host" : "localhost",
+    "port" : "2424",
+    "name" : "VegaNet"
+  }
+}
