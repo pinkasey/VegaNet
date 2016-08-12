@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+
+<html lang="he" dir="rtl" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>הרשת הטבעונית – פרה</title>
+	<style>
+		html, body {
+			overflow: hidden;
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		#renderCanvas {
+			width: 100%;
+			height: 100%;
+			touch-action: none;
+		}
+	</style>
+	<script src="babylon.js"></script>
+	<script src="hand.js"></script>
+	<script src="cannon.js"></script>  <!-- optional physics engine -->
+	<!-- <script src="Oimo.js"></script>  New physics engine -->
+
+</head>
+<body>
+	<h1>הרשת הטבעונית – פרה</h1>
+	<canvas id="renderCanvas"></canvas>
+	<script type="text/javascript">
+      // Get the canvas element from our HTML below
+      var canvas = document.querySelector("#renderCanvas");
+      // Load the BABYLON 3D engine
+      var engine = new BABYLON.Engine(canvas, true);
+
+      BABYLON.SceneLoader.Load("", "vn4.babylon", engine, function (scene) {
+      	// Wait for textures and shaders to be ready
+      	scene.executeWhenReady(function () {
+      		// Attach camera to canvas inputs
+      		var ground = BABYLON.Mesh.CreateGround("ground1", 99, 99, 0, scene);
+      		/*var ground =*/ scene.getMeshByID("Plane").position.y = -1000;
+      		var materialGrass = new BABYLON.StandardMaterial("texture1", scene);
+      		materialGrass.diffuseTexture = new BABYLON.Texture("grass.png", scene);
+      		materialGrass.diffuseTexture.uScale = 25.0;
+      		materialGrass.diffuseTexture.vScale = 25.0;
+      		ground.material = materialGrass;
+      		var originalMesh = scene.getMeshByID("Rooster");
+      		console.log(originalMesh);
+      		for (var i = 0; i < 100; ++i) {
+      			var newClone = originalMesh.clone("Rooster" + i);
+      			newClone.position.z = (i % 9 - 5) * 5 + Math.random() * 7;
+      			newClone.position.x = (i % 50 - 25) * 2 + Math.random() * 7;
+      			newClone.rotation.y = Math.random() * Math.PI * 2;
+      		}
+      		originalMesh = scene.getMeshByID("Cow");
+      		console.log(originalMesh);
+      		for (var i = 0; i < 10; ++i) {
+      			var newClone = originalMesh.clone("Cow" + i);
+      			newClone.position.z = (Math.random() - .5) * 55;
+      			newClone.position.x = (Math.random() - .5) * 55;
+      			newClone.rotation.y = Math.random() * Math.PI * 2;
+      		}
+      		var sun = new BABYLON.DirectionalLight("Sun", new BABYLON.Vector3(0, -1, 0), scene);
+      		sun.diffuse = new BABYLON.Color3(1, 1, .8);
+      		sun.specular = new BABYLON.Color3(1, 1, 1);
+      		scene.clearColor = new BABYLON.Color3(0.6, 0.7, 0.9);
+      		scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+      		scene.fogDensity = 0.01;
+      		scene.fogStart = 40.0;
+      		scene.fogEnd = 60.0;
+      		scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
+      		scene.activeCamera.attachControl(canvas);
+      		// Once the scene is loaded, just register a render loop to render it
+      		engine.runRenderLoop(function () {
+      			scene.render();
+      		});
+      	});
+      }, function (progress) {
+      	// To do: give progress feedback to user
+      	// progress.loaded / progress.total
+      });
+	</script>
+</body>
+</html>
