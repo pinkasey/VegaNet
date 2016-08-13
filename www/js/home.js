@@ -62,6 +62,7 @@ function refreshForm() {
     clearRows();
     addRow();
     formContainer.show();
+    $("#backToWorld").show();
 }
 
 
@@ -123,6 +124,7 @@ function statusChangeCallback(response) {
         document.getElementById('FbStatus').innerHTML = 'Please log ' +
             'into this app.';
         $("#formContainer").hide();
+        $("#backToWorld").hide();
         $("#FbLoginButton").show();
     } else {
         // The person is not logged into Facebook, so we're not sure if
@@ -130,6 +132,7 @@ function statusChangeCallback(response) {
         document.getElementById('FbStatus').innerHTML = 'Please log ' +
             'into Facebook.';
         $("#formContainer").hide();
+        $("#backToWorld").hide();
         $("#FbLoginButton").show();
     }
 }

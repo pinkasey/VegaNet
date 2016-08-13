@@ -318,7 +318,7 @@
       "id": "book",
       "materialId": "vn8.book-texture",
       "billboardMode": 0,
-      "position": [ .9, 1.75, -6 ],
+      "position": [ 0.9, 1.75, -6 ],
       "rotation": [ -0.5, 1.6, 0 ],
       "scaling": [ 0.125, 0.125, 0.125 ],
       "isVisible": true,

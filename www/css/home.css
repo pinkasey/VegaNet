@@ -61,6 +61,12 @@ body {
 	cursor:pointer;
 }
 
+#backToWorld {
+    width: 150px;
+    height: 20px;
+    margin: 0 4%;
+    background: transparent;
+}
 .story {
     width : 90%;
     height: 90px;
