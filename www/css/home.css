@@ -2,6 +2,8 @@ body {
     padding: 1% 12%;
     background: url('../img/book_open-4.jpg') no-repeat;
     background-size : cover;
+    font-family: 'Arial';
+    font-size: 11pt;
     /*min-height: 500px;*/
     height: 100%;
     /*max-height: 600px;*/
@@ -44,11 +46,41 @@ body {
     float : right;
 }
 
+#addRow, .removeRow {
+	cursor:pointer;
+}
+
 .story {
     width : 90%;
     height: 90px;
+	margin-top: 8px;
+	resize:none;
+	border:1px solid #dadada;
 }
 
 #addRow {
     /*display: block;*/
+}
+
+.formLine {
+	opacity:0;
+	transition: opacity 0.2s;
+}
+
+.formLine.visible
+{
+	opacity:1;
+
+}
+
+
+input {
+	border:1px solid #dadada;
+	padding: 2px;
+
+}
+
+.story
+{
+
 }

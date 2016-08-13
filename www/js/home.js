@@ -4,14 +4,33 @@ $(function() {
 });
 
 
-function addRow() {
-    var line=$('#formLine').clone().show().prop("id",'').insertBefore('#addRow');
-    line.find('.removeRow').click( removeRow );
+function updateAddRowState() {
+	if ($(".formLine").length <= 6)
+	{
+		$('#addRow').show();			
+	}
+	else
+	{
+		$('#addRow').hide();			
+	}
+	
+}
 
+function addRow() {
+	var line=$('#formLine').clone().show().prop("id",'').insertBefore('#addRow');
+    line.find('.removeRow').click( removeRow );
+    updateAddRowState();
+    setTimeout(function() {line.addClass("visible") },0);
 }
 
 function removeRow( event ) {
-    $(event.target.closest('.formLine')).remove();
+    var line = $(event.target.closest('.formLine'));
+    line.removeClass("visible");
+    setTimeout(function() {
+		updateAddRowState();
+		line.remove() 
+		},200);
+    
 }
 
 function submit() {
