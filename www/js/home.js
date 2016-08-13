@@ -157,5 +157,16 @@ function testAPI() {
     });
 }
 
+function facebookAutocomplete(str) {
+    FB.api(
+        "/" + str,
+        function (response) {
+            if (response && !response.error) {
+                /* handle the result */
+            }
+        }
+    );
+}
+
 // Facebook stuff
 ////////////////////////////////////////////////////////////////////////////

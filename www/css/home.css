@@ -67,6 +67,12 @@ body {
     margin: 0 4%;
     background: transparent;
 }
+
+#backToWorld img {
+    margin-right : 15px;
+    margin-left  : 15px;
+}
+
 .story {
     width : 90%;
     height: 90px;
@@ -77,6 +83,11 @@ body {
 
 #addRow {
     /*display: block;*/
+    margin: 15px;
+}
+
+#addRow img {
+    height: 15px;
 }
 
 .formLine {
@@ -94,10 +105,5 @@ body {
 input {
 	border:1px solid #dadada;
 	padding: 2px;
-
-}
-
-.story
-{
 
 }
