@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+
+<html lang="he" dir="rtl" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>הרשת הטבעונית – פרה</title>
+	<script src="3d/babylon.js"></script>
+	<script src="3d/hand.js"></script>
+	<!--<script src="3d/cannon.js"></script>-->
+	<style>
+		html, body {
+			overflow: hidden;
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		#renderCanvas {
+			width: 100%;
+			height: 100%;
+			touch-action: none;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="renderCanvas"></canvas>
+	<script type="text/javascript">
+      // Get the canvas element from our HTML below
+      var canvas = document.querySelector("#renderCanvas");
+      // Load the BABYLON 3D engine
+      var engine = new BABYLON.Engine(canvas, true);
+
+      BABYLON.SceneLoader.Load("", "3d/vn8.babylon", engine, function (scene) {
+      	// Wait for textures and shaders to be ready
+      	scene.executeWhenReady(function () {
+
+				// Ground
+      		var ground = BABYLON.Mesh.CreateGroundFromHeightMap("Ground", "3d/map1.jpg", 100, 100, 100, 0, 6, scene, true);
+      		ground.position.y = -1;
+      		ground.material = scene.getMaterialByID("vn8.grass");// grassMat;
+      		ground.checkCollisions = true;
+
+				// Animals
+      		cloneAnimals("chicken", 100);
+      		cloneAnimals("cow", 10);
+				
+
+      		function cloneAnimals(id, times) {
+      			var originalMesh = scene.getMeshByID(id);
+
+      			for (var i = 0; i < times; ++i) {
+      				var newClone = originalMesh.clone(id + i);
+      				newClone.position.z = (i % 10 - 3) * 3 + Math.random() * 7;
+      				newClone.position.x = i % 50 - 24 + Math.random() * 17;
+      				newClone.rotation.y = Math.random() * Math.PI * 2;
+      				newClone.applyGravity = true;
+
+      				var f1 = 22 + Math.random() * 99, f2 = f1 + 22 + Math.random() * 22, f3 = f2 + 22 + Math.random() * 99, a = 0.25 + Math.random() / 2;
+
+      				var animate = new BABYLON.Animation("Rotate" + id + i, "rotation.z", 12, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+      				animate.setKeys([
+							{ frame: f1, value: 0 },
+							{ frame: f2, value: a },
+							{ frame: f3, value: 0 }]);
+      				newClone.animations.push(animate);
+      				//animate = new BABYLON.Animation("Move" + id + i, "position.x", 12, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE);
+      				//animate.enableBlending = true;
+      				//animate.setKeys([
+					//		{ frame: 10, value: 1 },
+					//		{ frame: 20 + Math.random() * 100, value: a }]);
+      				//newClone.animations.push(animate);
+      				scene.beginAnimation(newClone, 0, f3 + 65 * Math.random(), true);
+      			}
+      			originalMesh.dispose();
+      		}
+
+      		// Open the boook
+
+      		var book = scene.getMeshByID("book");
+      		book.actionManager = new BABYLON.ActionManager(scene);
+      		book.actionManager.registerAction(
+					new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function (evt) {
+						window.location.href = "book.html";
+					}));
+
+      		var sun = new BABYLON.DirectionalLight("Sun", new BABYLON.Vector3(.5, -1, 0), scene);
+      		sun.position = new BABYLON.Color3(10, 10, 10);
+      		sun.diffuse = new BABYLON.Color3(1, 1, .8);
+      		sun.specular = new BABYLON.Color3(1, 1, 1);
+      		sun = new BABYLON.PointLight("Moon", new BABYLON.Vector3(0, -.9, .1), scene);
+      		sun.position = new BABYLON.Color3(15, 10, 20);
+      		sun.diffuse = new BABYLON.Color3(.6, .6, .7);
+      		sun.specular = new BABYLON.Color3(.6, .7, .7);
+      		sun.intensity = 2;
+
+      		scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+      		scene.fogDensity = 0.01;
+      		scene.fogStart = 40.0;
+      		scene.fogEnd = 60.0;
+      		scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
+
+      		// Skybox
+      		var skybox = BABYLON.Mesh.CreateBox("skyBox", 1000.0, scene);
+      		var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+      		skyboxMaterial.backFaceCulling = false;
+      		skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("3d/skybox/TropicalSunnyDay", scene);
+      		skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+      		skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+      		skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+      		skybox.material = skyboxMaterial;
+
+      		// Attach camera to canvas inputs
+      		scene.activeCamera.attachControl(canvas);
+      		// Once the scene is loaded, just register a render loop to render it
+      		engine.runRenderLoop(function () {
+      			scene.render();
+      		});
+      		window.addEventListener("resize", function () {
+      			engine.resize();
+      		});
+      	});
+      }, function (progress) {
+      	// To do: give progress feedback to user
+      	// progress.loaded / progress.total
+      });
+	</script>
+</body>
+</html>
