@@ -49,6 +49,25 @@ app.get('/Person/:person', function (req, res) {
                     });
         });
 
+app.get('/Person', function (req, res) {
+    res.send(
+        '{ ' +
+            '"Animals" : ' +
+            '{' +
+                'cow": 5,'+
+                'chicken" : 200'+
+            '},'+
+            'Achievements" :'+
+            '{'+
+                '"trophy" : 1,'+
+                '"medal" : 2,'+
+                '"badge" : 6'+
+            '}'+
+        '}'
+ );
+});
+
+
 app.post('/setInfluencers', function (req, res) {
     console.log("setInfluencers with params: %s", util.inspect( req.body ) );
     res.send( req.body );
