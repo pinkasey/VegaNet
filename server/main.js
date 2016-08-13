@@ -4,49 +4,44 @@ var util = require('util');
 var express = require('express');
 var ODatabase = require('orientjs').ODatabase;
 
-
-//Data base init
+// Database init
 var db = new ODatabase({
-  host:       conf.db.host,
-  port:       conf.db.port,
-  username:   conf.db.username,
-  password:   conf.db.password,
-  name:       conf.db.name
+host:       conf.db.host,
+port:       conf.db.port,
+username:   conf.db.username,
+password:   conf.db.password,
+name:       conf.db.name
 });
 
-
-
-//HTTP Server init
+// HTTP Server init
 var app = express();
 
-//make 3d a static folder, for development
+// Make 3d a static folder, for development
 app.use(express.static('3d'));
 
 app.use(express.static('www'));
 
 app.get('/Person/:person', function (req, res) {
-  var person = req.params.person;
+        var person = req.params.person;
 
-  db.open().then(function() {
-    var query = util.format("SELECT FROM Person WHERE firstName = '%s'", person );
-    console.log("query: %s", query);
-    return db.query(query);
-  }).then(function(qRes){
-    console.log('number of records: %d', qRes.length);
-    console.log('res: %s', util.inspect(qRes) );
-    db.close().then(function(){
-      console.log('closed');
-    });
+        db.open().then(function() {
+                var query =
+                    util.format("SELECT FROM Person WHERE firstName = '%s'",
+                        person );
+                console.log("query: %s", query);
+                return db.query(query);
+                }).then(function(qRes){
+                    console.log('number of records: %d', qRes.length);
+                    console.log('res: %s', util.inspect(qRes) );
+                    db.close().then(function(){
+                            console.log('closed');
+                            });
+                    res.send( qRes );
+                    });
+        });
 
-    res.send( qRes );
-  });
-});
-
-var server = app.listen(8000, function () {
-
-  var host = server.address().address;
-  var port = server.address().port;
-
-  console.log("Example app listening at http://%s:%s", host, port)
-
-});
+var server = app.listen(conf.http.port, conf.http.address, function () {
+        var host = server.address().address;
+        var port = server.address().port;
+        console.log("Example app listening at http://%s:%s", host, port)
+        });
