@@ -6,12 +6,12 @@ var ODatabase = require('orientjs').ODatabase;
 
 // Database init
 var db = new ODatabase({
-host:       conf.db.host,
-port:       conf.db.port,
-username:   conf.db.username,
-password:   conf.db.password,
-name:       conf.db.name
-});
+        "host":       conf.db.host,
+        "port":       conf.db.port,
+        "username":   conf.db.username,
+        "password":   conf.db.password,
+        "name":       conf.db.name
+        });
 
 // HTTP Server init
 var app = express();
@@ -26,7 +26,7 @@ app.get('/Person/:person', function (req, res) {
 
         db.open().then(function() {
                 var query =
-                    util.format("SELECT FROM Person WHERE firstName = '%s'",
+                util.format("SELECT FROM Person WHERE firstName = '%s'",
                         person );
                 console.log("query: %s", query);
                 return db.query(query);
