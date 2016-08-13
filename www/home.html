@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="js/lib/jquery.js"></script>
+    <script src="js/lib/jquery.form.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+    <script src="js/home.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/home.css">
+
+</head>
+<body>
+
+<div id="formLine" class="formLine" style="display: none">
+    <label>
+        Name:
+        <input type="text" name="name"/>
+    </label>
+    <span class="removeRow">&times;</span>
+<p>
+    <label>
+    Story:<br/>
+    <textarea class="story"></textarea>
+    </label>
+</p>
+
+</div>
+
+<h1>Persons who influenced me to go vegan</h1>
+<form id="addRelationForm" action="addRelation" method="post">
+    <span id="addRow" onclick="addRow()">+</span>
+</form>
+</body>
+</html>

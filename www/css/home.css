@@ -1,0 +1,40 @@
+body {
+    padding: 1% 12%;
+    background: url('../img/book_open-4.jpg') no-repeat;
+    background-size : cover;
+}
+
+#addRelationForm {
+    width: 50%;
+    height: 500px;
+
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+}
+
+.formLine {
+    border-bottom : wheat groove;
+
+    margin-bottom: 10px;
+    margin-right: 20px;
+    width: 100%;
+}
+.formLine:last-of-type {
+    border: none;
+}
+
+.removeRow {
+    float : right;
+}
+
+.story {
+    width : 90%;
+    height: 90px;
+}
+
+#addRow {
+    /*display: block;*/
+}

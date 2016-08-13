@@ -22,6 +22,8 @@ var app = express();
 //make 3d a static folder, for development
 app.use(express.static('3d'));
 
+app.use(express.static('www'));
+
 app.get('/Person/:person', function (req, res) {
   var person = req.params.person;
 
