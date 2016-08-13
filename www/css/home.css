@@ -24,6 +24,12 @@ body {
     position: static;
 }
 
+#submit {
+    background-color: bisque;
+    width: 60px;
+    border: groove;
+}
+
 .central {
     width : 100%;
     margin: auto;
@@ -44,6 +50,11 @@ body {
 
 .removeRow {
     float : right;
+}
+
+#formRows {
+    width: 100%;
+    height: 100%;
 }
 
 #addRow, .removeRow {
