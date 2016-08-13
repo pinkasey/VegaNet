@@ -21,22 +21,26 @@ app.use(express.static('3d'));
 
 app.use(express.static('www'));
 
-app.get('/Person/:person', function (req, res) {
-        var person = req.params.person;
+app.get('/Person/:fbAccountName', function (req, res) {
+        var fbAccountName = req.params.fbAccountName;
 
         db.open().then(function() {
                 var query =
-                util.format("SELECT FROM Person WHERE firstName = '%s'",
-                        person );
+                        "select expand(in()) from OnlineAccount where " +
+                        "accountServiceHomepage = " +
+                            "'https://www.facebook.com/' " +
+                        "and accountName = :accountName";
                 console.log("query: %s", query);
-                return db.query(query);
-                }).then(function(qRes){
+                return db.query(query, {
+                    "params": {"accountName": fbAccountName},
+                    "fetchPlan": "Person:-1"});
+                }).then(function(qRes) {
                     console.log('number of records: %d', qRes.length);
-                    console.log('res: %s', util.inspect(qRes) );
-                    db.close().then(function(){
+                    db.close().then(function() {
                             console.log('closed');
                             });
-                    res.send( qRes );
+                    res.set('Content-Type', 'text/plain');
+                    res.send(util.inspect(qRes, {'depth': 50}));
                     });
         });
 
